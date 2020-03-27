@@ -63,13 +63,88 @@ class CPU:
         # For now, we've just hardcoded a program:
 
         program = [
-            # From print8.ls8
-            0b10000010, # LDI R0,8
+            #results should be
+            # AND - 4
+            # OR  - 31
+            # XOR - 27
+            # NOT - 240
+            # SHR - 3
+            # SHL - 60
+            # MOD - 3
+            0b10000010, # LDI R0,15
             0b00000000,
-            0b00001000,
+            0b00001111,
+            0b10000010, # LDI R1,20
+            0b00000001,
+            0b00010100,
+            0b10101000, # AND R0, R1
+            0b00000000,
+            0b00000001,
             0b01000111, # PRN R0
             0b00000000,
-            0b00000001, # HLT
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b10000010, # LDI R1,20
+            0b00000001,
+            0b00010100,
+            0b10101010, # OR R0, R1
+            0b00000000,
+            0b00000001,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b10000010, # LDI R1,20
+            0b00000001,
+            0b00010100,
+            0b10101011, # XOR R0, R1
+            0b00000000,
+            0b00000001,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b01101001, # NOT R0, R1
+            0b00000000,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b10000010, # LDI R1,2
+            0b00000001,
+            0b00000010,
+            0b10101101, # SHR R0, R1
+            0b00000000,
+            0b00000001,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b10000010, # LDI R1,2
+            0b00000001,
+            0b00000010,
+            0b10101100, # SHL R0, R1
+            0b00000000,
+            0b00000001,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b10000010, # LDI R0,15
+            0b00000000,
+            0b00001111,
+            0b10000010, # LDI R1,4
+            0b00000001,
+            0b00000100,
+            0b10100100, # MOD R0, R1
+            0b00000000,
+            0b00000001,
+            0b01000111, # PRN R0
+            0b00000000,
+            0b00000001 # HLT
         ]
 
         if file:
@@ -149,19 +224,34 @@ class CPU:
 
     # STRETCH
     def op_AND(self, reg_a, reg_b):
-        pass
+        self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
+        self.pc += 3
     def op_OR(self, reg_a, reg_b):
-        pass
+        self.reg[reg_a] = self.reg[reg_a] | self.reg[reg_b]
+        self.pc += 3
     def op_XOR(self, reg_a, reg_b):
-        pass
+        self.reg[reg_a] = self.reg[reg_a] ^ self.reg[reg_b]
+        self.pc += 3
     def op_NOT(self, reg_a, reg_b):
-        pass
+        self.reg[reg_a] = ~self.reg[reg_a]
+        self.pc += 2
     def op_SHL(self, reg_a, reg_b):
-        pass
+        shift = self.reg[reg_b]
+        value = self.reg[reg_a] << shift
+        self.reg[reg_a] == value
+        self.pc += 3
     def op_SHR(self, reg_a, reg_b):
-        pass
+        shift = self.reg[reg_b]
+        value = self.reg[reg_a] >> shift
+        self.reg[reg_a] == value
+        self.pc += 3
     def op_MOD(self, reg_a, reg_b):
-        pass
+        if self.reg[reg_b] == 0:
+            print("Cannot divide by 0")
+            self.op_HLT
+        self.reg[reg_a] = self.reg[reg_a] % self.reg[reg_b]
+        self.pc += 3
+
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
