@@ -122,8 +122,14 @@ class CPU:
         value = self.fl << 7
         if value:
             self.pc = self.reg[reg_a]
+        else:
+            self.pc += 2
     def op_JNE(self, reg_a, reg_b):
-        pass
+        value = self.fl << 7
+        if value == 0:
+            self.pc = self.reg[reg_a]
+        else:
+            self.pc += 2
     def op_JMP(self, reg_a, reg_b):
         pass
 
