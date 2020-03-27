@@ -14,10 +14,17 @@ class CPU:
         self.sp_address = 7
         self.fl = 0
         self.branchtable = {}
+        SHR = 173 #
+        SHL = 172 #
+        XOR = 171 #
+        OR = 170 #
+        AND = 168 #
         CMP = 167
+        MOD = 164 #
         MUL = 162
         ADD = 160
         LDI = 130
+        NOT = 105 #
         JNE = 86
         JEQ = 85
         JMP = 84
@@ -40,6 +47,13 @@ class CPU:
         self.branchtable[JEQ] = self.op_JEQ
         self.branchtable[JNE] = self.op_JNE
         self.branchtable[JMP] = self.op_JMP
+        self.branchtable[SHR] = self.op_SHR #
+        self.branchtable[SHL] = self.op_SHL #
+        self.branchtable[XOR] = self.op_XOR #
+        self.branchtable[OR] = self.op_OR #
+        self.branchtable[AND] = self.op_AND #
+        self.branchtable[NOT] = self.op_NOT #
+        self.branchtable[MOD] = self.op_MOD #
 
     def load(self, file=None):
         """Load a program into memory."""
@@ -132,6 +146,22 @@ class CPU:
             self.pc += 2
     def op_JMP(self, reg_a, reg_b):
         self.pc = self.reg[reg_a]
+
+    # STRETCH
+    def op_AND(self, reg_a, reg_b):
+        pass
+    def op_OR(self, reg_a, reg_b):
+        pass
+    def op_XOR(self, reg_a, reg_b):
+        pass
+    def op_NOT(self, reg_a, reg_b):
+        pass
+    def op_SHL(self, reg_a, reg_b):
+        pass
+    def op_SHR(self, reg_a, reg_b):
+        pass
+    def op_MOD(self, reg_a, reg_b):
+        pass
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
