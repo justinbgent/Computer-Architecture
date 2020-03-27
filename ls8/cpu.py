@@ -131,7 +131,7 @@ class CPU:
         else:
             self.pc += 2
     def op_JMP(self, reg_a, reg_b):
-        pass
+        self.pc = self.reg[reg_a]
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
