@@ -13,10 +13,14 @@ class CPU:
         self.pc = 0
         self.sp_address = 7
         self.branchtable = {}
+        CMP = 167
+        MUL = 162
         ADD = 160
         LDI = 130
-        MUL = 162
+        JNE = 86
+        JMP = 84
         CALL = 80
+        JEQ = 75
         PRN = 71
         POP = 70
         PUSH = 69
@@ -31,6 +35,10 @@ class CPU:
         self.branchtable[POP] = self.op_POP
         self.branchtable[CALL] = self.op_CALL
         self.branchtable[RET] = self.op_RET
+        self.branchtable[CMP] = self.op_CMP
+        self.branchtable[JEQ] = self.op_JEQ
+        self.branchtable[JNE] = self.op_JNE
+        self.branchtable[JMP] = self.op_JMP
 
     def load(self, file=None):
         """Load a program into memory."""
@@ -97,6 +105,14 @@ class CPU:
     def op_RET(self, reg_a, reg_b):
         self.pc = self.ram[self.reg[self.sp_address]]
         self.reg[self.sp_address] += 1
+    def op_CMP(self, reg_a, reg_b):
+        pass
+    def op_JEQ(self, reg_a, reg_b):
+        pass
+    def op_JNE(self, reg_a, reg_b):
+        pass
+    def op_JMP(self, reg_a, reg_b):
+        pass
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
