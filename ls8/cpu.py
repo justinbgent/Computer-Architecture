@@ -12,6 +12,7 @@ class CPU:
         self.reg = [0] * 8
         self.pc = 0
         self.sp_address = 7
+        self.fl = 0
         self.branchtable = {}
         CMP = 167
         MUL = 162
@@ -106,7 +107,17 @@ class CPU:
         self.pc = self.ram[self.reg[self.sp_address]]
         self.reg[self.sp_address] += 1
     def op_CMP(self, reg_a, reg_b):
-        pass
+        value_a = self.reg[reg_a]
+        value_b = self.reg[reg_b]
+        self.fl = 0
+        # shifting to match 00000LGE
+        if value_a < value_b:
+            self.fl += 1 << 2
+        if value_a > value_b:
+            self.fl += 1 << 1
+        if value_a == value_b:
+            self.fl += 1
+        self.pc += 3
     def op_JEQ(self, reg_a, reg_b):
         pass
     def op_JNE(self, reg_a, reg_b):
