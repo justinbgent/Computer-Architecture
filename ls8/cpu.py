@@ -19,9 +19,9 @@ class CPU:
         ADD = 160
         LDI = 130
         JNE = 86
+        JEQ = 85
         JMP = 84
         CALL = 80
-        JEQ = 75
         PRN = 71
         POP = 70
         PUSH = 69
@@ -119,13 +119,13 @@ class CPU:
             self.fl += 1
         self.pc += 3
     def op_JEQ(self, reg_a, reg_b):
-        value = self.fl << 7
+        value = self.fl % 2
         if value:
             self.pc = self.reg[reg_a]
         else:
             self.pc += 2
     def op_JNE(self, reg_a, reg_b):
-        value = self.fl << 7
+        value = self.fl % 2
         if value == 0:
             self.pc = self.reg[reg_a]
         else:
