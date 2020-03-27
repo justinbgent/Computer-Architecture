@@ -119,7 +119,9 @@ class CPU:
             self.fl += 1
         self.pc += 3
     def op_JEQ(self, reg_a, reg_b):
-        pass
+        value = self.fl << 7
+        if value:
+            self.pc = self.reg[reg_a]
     def op_JNE(self, reg_a, reg_b):
         pass
     def op_JMP(self, reg_a, reg_b):
